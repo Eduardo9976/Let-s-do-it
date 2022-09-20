@@ -1,27 +1,35 @@
 const helpers = require("../../helpers/index.js");
 
 const findOneToDo = (id) =>
-  helpers.readDBFile("to-do").some((toDo) => toDo.id === id);
+  helpers.readDBFile("to-do").find((toDo) => toDo.id === id);
+
+const filterToDoByOwner = (toDoList, ownerId) =>
+  toDoList.filter((toDo) => toDo.owner === Number(ownerId));
 
 const getToDoList = (req, res, next) => {
+  const owner = req.query.owner;
+
   try {
-    const data = helpers.readDBFile("to-do");
-    return res.status(200).json(data);
+    let toDoList = helpers.readDBFile("to-do");
+    toDoList = filterToDoByOwner(toDoList, owner);
+    return res.status(200).json(toDoList);
   } catch (error) {
     next({ errorMessage: "Service unavailable." });
   }
 };
 
 const addToDo = (req, res, next) => {
-  const { task, done } = req.body;
+  const { task, done, owner } = req.body;
 
-  if (task?.length > 4) {
+  if (task?.length > 4 && owner > 0) {
     try {
-      const toDoList = helpers.addInDBFile("to-do")({
+      let toDoList = helpers.addInDBFile("to-do")({
         task,
+        owner,
         done: done || false,
       });
-      return res.status(201).send(toDoList);
+      toDoList = filterToDoByOwner(toDoList, owner);
+      return res.status(201).json(toDoList);
     } catch (error) {
       next({ errorMessage: "Service unavailable." });
     }
@@ -53,8 +61,9 @@ const updateToDo = (req, res, next) => {
 
   try {
     if ((existToDo && task?.length > 4) || req.body.hasOwnProperty("done")) {
-      const data = helpers.updateInDBFile("to-do")(id, { ...req.body });
-      return res.status(200).json(data);
+      let toDoList = helpers.updateInDBFile("to-do")(id, { ...req.body });
+      toDoList = filterToDoByOwner(toDoList, existToDo.owner);
+      return res.status(200).json(toDoList);
     }
   } catch (error) {
     next({ errorMessage: "Service unavailable." });

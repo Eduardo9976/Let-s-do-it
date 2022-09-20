@@ -10,6 +10,7 @@ export interface ToDo {
   id: number;
   task: string;
   done: boolean;
+  owner: number;
   created_at: string;
 }
 

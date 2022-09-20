@@ -13,6 +13,7 @@ app.use(
 );
 
 app.use("/api/to-do", require("./routes/toDo/index.js"));
+app.use("/api/users", require("./routes/users/index.js"));
 
 app.use((error, req, res, next) => {
   if (error.errorMessage && error.status) {

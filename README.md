@@ -1,4 +1,4 @@
-# to-do-list-you-shop
+# to-do-list
 
 ## Project setup
 ```

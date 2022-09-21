@@ -14,7 +14,7 @@ const getToDoList = (req, res, next) => {
     toDoList = filterToDoByOwner(toDoList, owner);
     return res.status(200).json(toDoList);
   } catch (error) {
-    next({ errorMessage: "Service unavailable." });
+    next({ errorMessage: "Serviço indisponível, tente novamente" });
   }
 };
 
@@ -31,11 +31,11 @@ const addToDo = (req, res, next) => {
       toDoList = filterToDoByOwner(toDoList, owner);
       return res.status(201).json(toDoList);
     } catch (error) {
-      next({ errorMessage: "Service unavailable." });
+      next({ errorMessage: "Serviço indisponível, tente novamente" });
     }
   }
 
-  next({ errorMessage: "Check the fields", status: 400 });
+  next({ errorMessage: "Verifique os campos e tente novamente", status: 400 });
 };
 
 const deleteToDo = (req, res, next) => {
@@ -48,9 +48,9 @@ const deleteToDo = (req, res, next) => {
       return res.status(204).end();
     }
 
-    next({ errorMessage: "Task unavailable", status: 400 });
+    next({ errorMessage: "Algo deu errado, tente novamente", status: 400 });
   } catch (error) {
-    next({ errorMessage: "Service unavailable." });
+    next({ errorMessage: "Serviço indisponível, tente novamente" });
   }
 };
 
@@ -66,10 +66,10 @@ const updateToDo = (req, res, next) => {
       return res.status(200).json(toDoList);
     }
   } catch (error) {
-    next({ errorMessage: "Service unavailable." });
+    next({ errorMessage: "Serviço indisponível, tente novamente" });
   }
 
-  next({ errorMessage: "Check the fields", status: 400 });
+  next({ errorMessage: "Verifique os campos e tente novamente", status: 400 });
 };
 
 module.exports = {

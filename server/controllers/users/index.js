@@ -19,9 +19,9 @@ const getOneUser = (req, res, next) => {
     if (userExist) {
       return res.status(200).json(userExist);
     }
-    next({ errorMessage: "Something wrong", status: 400 });
+    next({ errorMessage: "Algo deu errado", status: 400 });
   } catch (error) {
-    next({ errorMessage: "Service unavailable." });
+    next({ errorMessage: "Serviço indisponível, tente novamente" });
   }
 };
 
@@ -33,7 +33,7 @@ const addUser = (req, res, next) => {
       const userExist = findOneUser({ email });
 
       if (userExist) {
-        return next({ errorMessage: "E-mail already registered", status: 400 });
+        return next({ errorMessage: "E-mail já registrado", status: 400 });
       }
 
       const usersList = helpers.addInDBFile("users")({
@@ -42,13 +42,14 @@ const addUser = (req, res, next) => {
         password,
       });
       const [user] = filterUserByEmail(usersList, email);
+      delete user.password;
       return res.status(201).json(user);
     } catch (error) {
-      next({ errorMessage: "Service unavailable." });
+      next({ errorMessage: "Serviço indisponível, tente novamente" });
     }
   }
 
-  next({ errorMessage: "Check the fields", status: 400 });
+  next({ errorMessage: "Verifique os campos e tente novamente", status: 400 });
 };
 
 const loginUser = (req, res, next) => {
@@ -59,16 +60,17 @@ const loginUser = (req, res, next) => {
       const userExist = findOneUser({ email });
 
       if (userExist && password === userExist.password) {
+        delete userExist.password;
         return res.status(200).json(userExist);
       }
 
-      return next({ errorMessage: "Check the fields", status: 400 });
+      return next({ errorMessage: "Verifique os campos e tente novamente", status: 400 });
     } catch (error) {
-      next({ errorMessage: "Service unavailable." });
+      next({ errorMessage: "Serviço indisponível, tente novamente" });
     }
   }
 
-  next({ errorMessage: "Check the fields", status: 400 });
+  next({ errorMessage: "Verifique os campos e tente novamente", status: 400 });
 };
 
 module.exports = {

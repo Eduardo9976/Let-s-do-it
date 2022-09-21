@@ -1,24 +1,16 @@
 <template>
   <v-app>
+    <v-alert :type="hasAlert.type" dismissible :value="!!hasAlert.message">
+      {{ hasAlert.message }}
+    </v-alert>
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+        <v-icon large> mdi-calendar-check-outline </v-icon>
+        <span
+          class="text-uppercase ml-2 hidden-sm-and-down"
+          aria-label="To do list"
+          >To do list</span
+        >
       </div>
 
       <v-spacer></v-spacer>
@@ -32,7 +24,6 @@
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>
-
     <v-main>
       <router-view />
     </v-main>
@@ -41,12 +32,34 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { mapGetters } from "vuex";
 
 export default Vue.extend({
   name: "App",
-
-  data: () => ({
-    //
-  }),
+  computed: {
+    ...mapGetters("GLOBAL", ["hasAlert"]),
+  },
 });
 </script>
+<style>
+html {
+  overflow-y: auto !important;
+}
+.v-main {
+  background: rgba(47, 138, 248, 0.113);
+}
+
+.v-alert {
+  position: fixed;
+  right: 0px;
+  top: 70px;
+  z-index: 10;
+}
+
+@media screen and (max-width: 600px) {
+  .v-alert {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+</style>

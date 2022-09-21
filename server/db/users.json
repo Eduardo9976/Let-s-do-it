@@ -5,5 +5,26 @@
     "password": "12345678",
     "id": 1,
     "created_at": 1663681367724
+  },
+  {
+    "name": "Eduardo",
+    "email": "ed@mail.com",
+    "password": "Skype@0705",
+    "id": 2,
+    "created_at": 1663777770597
+  },
+  {
+    "name": "camila",
+    "email": "c@c.com",
+    "password": "Skype@0705",
+    "id": 3,
+    "created_at": 1663777942233
+  },
+  {
+    "name": "Carlos",
+    "email": "carlos@m.com",
+    "password": "Skype@0705",
+    "id": 4,
+    "created_at": 1663780466610
   }
 ]

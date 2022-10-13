@@ -89,6 +89,7 @@ export default Vue.extend({
         };
         const { data } = await services.users.signUp(signUpUser);
         this.setUserLogged(data);
+        this.$router.push({ name: "toDo" });
       } catch {}
     },
     async signIn() {
@@ -99,6 +100,7 @@ export default Vue.extend({
         };
         const { data } = await services.users.signIn(signInUser);
         this.setUserLogged(data);
+        this.$router.push({ name: "toDo" });
       } catch {}
     },
     submit() {

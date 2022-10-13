@@ -4,9 +4,9 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  name: "LoginView",
+  name: "HomeView",
   components: {
-    LoginComponent: () => import("@/components/Login/index.vue"),
+    LoginComponent: () => import("@/components/Home/index.vue"),
   },
 });
 </script>

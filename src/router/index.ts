@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import HomeView from "../views/Home/index.vue";
 
 Vue.use(VueRouter);
 
@@ -14,6 +14,11 @@ const routes: Array<RouteConfig> = [
     path: "/login",
     name: "login",
     component: () => import("../views/Login/index.vue"),
+  },
+  {
+    path: "/to-do",
+    name: "toDo",
+    component: () => import("../views/ToDo/index.vue"),
   },
 ];
 
